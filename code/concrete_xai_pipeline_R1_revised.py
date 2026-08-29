@@ -42,8 +42,10 @@ from scipy.stats import wilcoxon
 # SETTINGS
 # =========================================================
 
-DATA_PATH = r"D:\Resarch\بحث\Data.csv"
-BASE_DIR = r"D:\Resarch\بحث\R1_RESULTS"
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DATA_PATH = os.path.join(PROJECT_ROOT, "data", "Data.csv")
+BASE_DIR = os.path.join(PROJECT_ROOT, "results")
 TARGET = "Cs_(Mpa)"
 RANDOM_STATE = 42
 N_SPLITS = 5
