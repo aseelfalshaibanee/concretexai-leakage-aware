@@ -8,14 +8,16 @@ Reproducibility package for:
 
 ```
 code/
-  concrete_xai_pipeline_R1_revised.py   # the single script that generates every number in the paper
+  concrete_xai_pipeline_R1_revised.py
+data/
+  Data.csv
 results/
-  environment_versions.json             # exact package versions and seeds used for the reported runs
+  environment_versions.json
   splits/
-    kfold_split_indices.csv             # fixed 5-fold random-split indices (seed 42)
-    groupkfold_split_indices.csv        # fixed formulation-grouped split indices
-  tables/                               # CSV outputs backing every table of the paper
-requirements.txt                        # pinned dependency versions
+    kfold_split_indices.csv
+    groupkfold_split_indices.csv
+  tables/
+requirements.txt
 ```
 
 Mapping from paper tables to output files:
@@ -35,7 +37,7 @@ The ConcreteXAI dataset (4,420 records, 11 variables) is publicly available; see
 
 > J. A. Guzman-Torres et al., "ConcreteXAI: A multivariate dataset for concrete strength prediction via deep-learning-based methods", Data in Brief, Vol. 53, Art. no. 110218, 2024. https://doi.org/10.1016/j.dib.2024.110218
 
-Download the dataset, save it as `Data.csv` next to the script (or edit `DATA_PATH` at the top of the script). The expected columns are:
+The ConcreteXAI dataset used in this study is included in the `data/` directory as `Data.csv`. The script automatically resolves the dataset path relative to the repository root, so no manual path configuration is required. The expected columns are:
 `Type_of_cement, Brand, Additives, Type_of_aggregates, Design_F'c (Mpa), Curing_age_(days), Cs_(Mpa), Ts_(Mpa), Fs_(Mpa), Er_(ohm-cm), UPV_(m/s)`.
 
 ## How to reproduce
@@ -45,7 +47,7 @@ pip install -r requirements.txt
 python code/concrete_xai_pipeline_R1_revised.py
 ```
 
-The script runs, in order: environment logging; formulation-group construction and redundancy analysis; leakage-aware imputation comparison (KNN vs Random Forest, predictor sets exclude all strength variables; selection criterion: minimum mean RMSE, tie-break by MAE); the three feature-configuration experiments under a fully nested 5-fold protocol (imputation, encoding, and scaling fitted inside each training fold only); group-wise validation (GroupKFold and leave-one-formulation-out); the measurement-perturbation test; and the Wilcoxon signed-rank tests. All outputs are written to `R1_RESULTS/`.
+The script runs, in order: environment logging; formulation-group construction and redundancy analysis; leakage-aware imputation comparison (KNN vs Random Forest, predictor sets exclude all strength variables; selection criterion: minimum mean RMSE, tie-break by MAE); the three feature-configuration experiments under a fully nested 5-fold protocol (imputation, encoding, and scaling fitted inside each training fold only); group-wise validation (GroupKFold and leave-one-formulation-out); the measurement-perturbation test; and the Wilcoxon signed-rank tests. All outputs are written to the `results/` directory.
 
 Everything is deterministic given `random_state = 42`. Small numeric differences may appear with other library versions than those pinned in `requirements.txt`; the paper reports values at the resolution (4 decimal places for R², 3 for errors) at which they are stable.
 
