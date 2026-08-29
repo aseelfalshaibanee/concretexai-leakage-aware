@@ -1,0 +1,10 @@
+{
+  "n_samples": 4420,
+  "n_formulation_groups": 12,
+  "n_unique_formulation_x_age": 48,
+  "duplicate_rows_features_only": 0,
+  "duplicate_rows_full": 0,
+  "mean_within_group_target_variance": 18.036329700076394,
+  "global_target_variance": 91.94550767770741,
+  "variance_ratio_within_over_global": 0.19616325099099302
+}

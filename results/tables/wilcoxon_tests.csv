@@ -1,0 +1,4 @@
+comparison,wilcoxon_stat,p_value
+XGBoost vs LightGBM,5.0,0.625
+XGBoost vs CatBoost,0.0,0.0625
+XGBoost vs RandomForest,7.0,1.0
