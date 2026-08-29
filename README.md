@@ -53,4 +53,4 @@ Everything is deterministic given `random_state = 42`. Small numeric differences
 
 ## License
 
-Code released under the MIT License. The ConcreteXAI dataset retains its original license (CC BY 4.0); it is not redistributed here.
+Code released under the MIT License. The ConcreteXAI dataset is redistributed under its original CC BY 4.0 license. Please cite the original dataset publication when using the dataset.
