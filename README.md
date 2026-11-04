@@ -54,3 +54,54 @@ Everything is deterministic given `random_state = 42`. Small numeric differences
 ## License
 
 Code released under the MIT License. The ConcreteXAI dataset is redistributed under its original CC BY 4.0 license. Please cite the original dataset publication when using the dataset.
+
+
+## Nested Optuna Optimization and Reproducibility (R1-7)
+
+This repository provides reproducibility evidence for the leakage-aware prediction of concrete compressive strength using the ConcreteXAI dataset.
+
+### Experimental Protocols
+
+Two five-fold outer cross-validation protocols were evaluated:
+
+- **Random5Fold:** Randomly shuffled five-fold cross-validation.
+- **GroupKFold5:** Five-fold group-disjoint cross-validation designed to assess generalization to unseen concrete formulation groups.
+
+Nested Optuna hyperparameter optimization was performed for the PolyBayes-ABR model, with 50 optimization trials per outer fold and 5 outer folds per protocol, yielding **500 recorded trials across both protocols**.
+
+### Verified Results
+
+The recorded outer-fold performance summaries are:
+
+| Protocol | Mean R² | Mean RMSE (MPa) | Mean MAE (MPa) |
+|---|---:|---:|---:|
+| Random5Fold | 0.995129 | 0.668356 | 0.426619 |
+| GroupKFold5 | 0.179571 | 5.322920 | 4.504512 |
+
+These values are arithmetic means of the five outer-fold metrics for each protocol. They should not be interpreted as pooled out-of-fold metrics.
+
+### Reproducibility Files
+
+The updated repository includes:
+
+- `code/concrete_xai_pipeline_R3_with_optuna_logging.py` — updated experiment pipeline and logging.
+- `code/run_optuna_full_R1_7_FIXED.py` — nested optimization runner.
+- `results/optuna_nested_R1_7/` — 26 CSV evidence files, including Optuna trial logs, inner-fold split records, best parameters, outer-fold metrics, and out-of-fold predictions.
+
+The historical R1 code and earlier results are retained for provenance.
+
+### Reproducibility Notes
+
+The Optuna experiment completed successfully in the original execution environment. Its outputs were subsequently checked for file completeness and numerical consistency.
+
+A separate clean-environment end-to-end reproduction has not been independently documented. The published results should therefore be distinguished from a newly reproduced run.
+
+### Data and Software
+
+The experiment uses the ConcreteXAI dataset. Consult the repository's dataset licensing information before redistributing or reusing the data.
+
+Python package dependencies are documented in `requirements.txt`. Exact versions used in the original execution environment should be preserved separately when available.
+
+### Scientific Interpretation
+
+The difference between Random5Fold and GroupKFold5 performance demonstrates the importance of evaluating generalization beyond randomly partitioned observations. Strong random-fold accuracy alone does not establish reliable performance on unseen concrete formulation groups.
